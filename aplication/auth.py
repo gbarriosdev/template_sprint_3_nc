@@ -114,7 +114,7 @@ def register():
             flash('Please check in your registered email to activate your account')
             return render_template('auth/login.html') 
 
-        return render_template(TEMP) 
+        return render_template('auth/register.html') 
     except:
         return render_template('auth/register.html')
 
@@ -160,7 +160,7 @@ def confirm():
                 db.execute(
                     'UPDATE forgotlink SET state = ? WHERE id = ?', (utils.F_INACTIVE, attempt['id'])
                 )
-                salt = hex(random.getrandbits(128))[2:]
+                salt = hex(random.getrandbits(128))
                 hashP = generate_password_hash(password + salt)
                 db.execute(
                     'UPDATE user SET password = ?, SALT = ? WHERE id = ?', (hashP, salt, attempt['userid'])
